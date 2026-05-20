@@ -10,9 +10,17 @@ program farmville {
 	game.ground("ground.png")
 
 	//  VISUALES
- 	game.addVisualCharacter(personaje)
+	game.addVisualCharacter(personaje)
  	game.addVisual(new Maiz()) // Se agrega a modo de prueba
- 	
+	game.addVisual(new Trigo())
+	game.addVisual(new Tomate())
+
+	// A
+	keyboard.m().onPressDo({personaje.sembrar(new Maiz())})
+	keyboard.t().onPressDo({personaje.sembrar(new Trigo())})
+	keyboard.o().onPressDo({personaje.sembrar(new Tomate())})
+	keyboard.r().onPressDo({personaje.regar(uniqueCollide, getObjectIn)})
+
  	//  COMIENZA
 	game.start()
 }
