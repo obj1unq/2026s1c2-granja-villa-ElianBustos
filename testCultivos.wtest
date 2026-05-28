@@ -82,6 +82,7 @@ describe "plantar, regar y cosechadas" {
     test "personaje siembra y cosecha un tomate" {
         game.height(10) 
 		game.width(10)
+        game.addVisual(tomate)
         personaje.position(game.at(0,0))
 		//
 		personaje.sembrar(tomate)
