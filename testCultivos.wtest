@@ -144,7 +144,7 @@ describe "aspersores y regar" {
         const tomate = new Tomate()
         const aspersor = new Aspersor()
 
-    test "description" {
+    test "aspersor riega maiz,trigo y tomate" {
         game.height(10) 
 		game.width(10)
 
