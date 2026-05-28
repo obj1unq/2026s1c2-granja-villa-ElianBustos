@@ -1,0 +1,177 @@
+import etapaDelTrigo.*
+import aspersor.*
+import wollok.game.*
+import personaje.*
+import cultivos.*
+import mercado.*
+import estadoCultivo.*
+
+
+
+describe "plantar, regar y cosechadas" {
+
+	const maiz = new Maiz() 
+	const trigo = new Trigo()
+	const tomate = new Tomate()
+
+    test "personaje siembra y no esta listo para cosechar maiz"{
+        game.height(10) 
+		game.width(10)
+		personaje.position(game.at(5,5))
+		//
+		personaje.sembrar(maiz)
+		assert.notThat(maiz.esCosechable())
+	
+	}
+    test "personaje siembra y cosecha un maiz"{
+        game.height(10) 
+		game.width(10)
+		personaje.position(game.at(5,5))
+		//
+		personaje.sembrar(maiz)
+		assert.notThat(maiz.esCosechable())
+		personaje.regar(maiz)
+		assert.that(maiz.esCosechable())
+		personaje.cosechar(maiz)
+		assert.that(personaje.plantasCosechadas().contains(maiz))
+	
+	}
+
+
+    
+
+        test "personaje siembra y cosecha un trigo"{
+        game.height(10) 
+		game.width(10)
+	
+	// setup
+
+		personaje.position(game.at(5,5))
+		//
+		personaje.sembrar(trigo)
+		assert.notThat(trigo.esCosechable())
+		personaje.regar(trigo)
+        assert.notThat(trigo.esCosechable())
+        personaje.regar(trigo)
+		assert.that(trigo.esCosechable())
+		personaje.cosechar(trigo)
+		assert.that(personaje.plantasCosechadas().contains(trigo))
+	
+	}
+
+
+
+        test "personaje siembra y riega un tomate, pero no esta en la posicion actual"{
+        game.height(10) 
+		game.width(10)
+        
+	
+		personaje.position(game.at(5,5))
+		//
+		personaje.sembrar(tomate)
+
+        assert.that(tomate.esCosechable())
+		personaje.regar(tomate)
+        assert.notThat(personaje.position() == tomate.position())
+
+
+
+	
+	}
+
+    test "personaje siembra y cosecha un tomate" {
+        game.height(10) 
+		game.width(10)
+        personaje.position(game.at(0,0))
+		//
+		personaje.sembrar(tomate)
+		personaje.regar(tomate)
+        personaje.position(game.at(0,1))
+        assert.that(personaje.position() == tomate.position())
+
+		personaje.cosechar(tomate)
+		assert.that(personaje.plantasCosechadas().contains(tomate))
+
+    }
+}
+
+
+
+
+describe "vender en el mercado " {
+        const maiz = new Maiz() 
+        const trigo = new Trigo()
+        const tomate = new Tomate()
+        const mercado = new Mercado()
+
+    test "personaje intenta vender las plantas cosechadas en el mercado pero no tiene suficiente dinero " {
+        game.height(10) 
+		game.width(10)
+        personaje.plantasCosechadas([maiz,tomate,trigo])
+        mercado.position(game.at(5,5))
+        personaje.position(game.at(5,5))
+
+        personaje.vender(mercado)
+
+        assert.equals([maiz,tomate,trigo], personaje.plantasCosechadas())
+        assert.notThat(mercado.suficienteDinero(personaje.plantasCosechadas()))
+    }
+
+    test" personaje vende las plantas cosechadas en el mercado y recibe monedas"{
+        game.height(10) 
+		game.width(10)
+        
+        personaje.plantasCosechadas([maiz,tomate,trigo])
+        personaje.position(game.at(5,5))
+        mercado.position(game.at(5,5))
+        mercado.monedas(1000)
+        maiz.estado(adulto)
+        trigo.etapaDelTrigo(etapa3)
+        tomate.estado(adulto)
+
+
+        personaje.vender(mercado)
+
+        assert.equals(430,personaje.monedas())
+        assert.equals(570,mercado.monedas())
+    }
+}
+
+describe "aspersores y regar" {
+            const maiz = new Maiz() 
+        const trigo = new Trigo()
+        const tomate = new Tomate()
+        const aspersor = new Aspersor()
+
+    test "description" {
+        game.height(10) 
+		game.width(10)
+
+        game.addVisual(maiz)
+        game.addVisual(trigo)
+        game.addVisual(tomate)
+        game.addVisual(aspersor)
+
+        maiz.position(game.at(5,6))
+        trigo.position(game.at(5,4))
+        tomate.position(game.at(6,5))
+
+        assert.notThat(maiz.esCosechable())
+        assert.notThat(trigo.esCosechable())
+        assert.equals(bebe,tomate.estado())
+
+        
+        aspersor.position(game.at(5,5))
+        aspersor.regarEnPosicion(game.at(5,6))
+        aspersor.regarEnPosicion(game.at(5,4))
+        aspersor.regarEnPosicion(game.at(6,5))
+
+        
+        assert.that(maiz.esCosechable())
+        assert.notThat(trigo.esCosechable())
+        assert.equals(adulto,tomate.estado())
+
+    }
+}
+
+

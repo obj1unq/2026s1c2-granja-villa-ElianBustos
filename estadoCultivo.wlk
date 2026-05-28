@@ -13,7 +13,7 @@ object  bebe{
 
 
 	method maiz() {
-		return "corn_adult.png"
+		return "corn_baby.png"
 	}
 
     

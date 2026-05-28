@@ -1,65 +1,105 @@
 import wollok.game.*
 import estadoCultivo.*
 import personaje.*
+import etapaDelTrigo.*
 
 
 
 class Maiz {
 	var property estado = bebe
-	const granjero = personaje
-	var property position = granjero.position() 
+	var property position = game.at(0,0)
 
 	method image() {
 		// TODO: hacer que devuelva la imagen que corresponde
 		return estado.maiz()
 	}
+	method cosechar() {
+		game.removeVisual(self)
+	}
+
+	method esCosechable() {
+		return estado.esCosechable()
+	}
 
 	method sembrar() {
-		game.addVisual(new Maiz())
+			game.addVisual(new Maiz(position= personaje.position()))
+
 	}
 	
 	method regar() {
-		// if(not(estado.esCosechable()))
 			estado = adulto
 	}
+	
+	method costo() {
+		return 150
+	}
 
+	method esPlanta() {
+		return true
+	}
+
+	
+	    method esMercado() {
+        return false
+    }
 	
 }
 
 
 class Trigo {
-	var property estado = bebe
-	const granjero = personaje
-	var property position = granjero.position() 
+	var property etapaDelTrigo = etapa0
+	var property position = game.at(0,0)
 
 	method image() {
 		// TODO: hacer que devuelva la imagen que corresponde
-		return "wheat_0.png"
+		return etapaDelTrigo.image()
 	}
 
 
 	method sembrar() {
-		game.addVisual(new Trigo())
+		game.addVisual(new Trigo(position= personaje.position()))
+
 	}
 
 	method cosechar() {
-		
+
+		game.removeVisual(self)
+	
 	}
 
-	method crecer() {
-		
+	
+	method esCosechable() {
+		return etapaDelTrigo.esCosechable()
 	}
+
+	method regar() {
+	
+	etapaDelTrigo = etapaDelTrigo.siguienteEtapa()
+
+	}
+
+	
 
 	method costo() {
-		return 
+		return (etapaDelTrigo.costo() - 1) * 100
 	}
+
+	method esPlanta() {
+		return true
+	}
+
+	
+	    method esMercado() {
+        return false
+    }
+
+	
 }
 
 
 class Tomate {
 	var property estado = bebe
-	const granjero = personaje
-	var property position = granjero.position() 
+	var property position = game.at(0,0)
 
 	method image() {
 		// TODO: hacer que devuelva la imagen que corresponde
@@ -68,50 +108,50 @@ class Tomate {
 
 	
 	method sembrar() {
-		game.addVisual(new Tomate())
+			game.addVisual(new Tomate(position= personaje.position()))
+
 	}
 
 	method regar() {
-		if(not(estado.esCosechable()))
-			estado = adulto
+		estado = adulto
+		self.crecerTomate()
+
+
 	}
+
+	
+	method esCosechable() {
+		return  true
+	}
+
+	method cosechar() {
+		game.removeVisual(self)
+	}
+
+	method crecerTomate() {
+		if(self.estaEnElBorde()){
+		position = position.down(game.height() -1)
+		}else{ 
+		position=position.up(1)
+		}
+	}
+
+	method estaEnElBorde() {
+		return game.width() - 1 == position.y()
+	}
+
+		method esPlanta() {
+		return true
+	}
+
+	method costo() {
+		return 80
+	}
+
+	    method esMercado() {
+        return false
+    }
 }
-
-
-
-/*
-
-	test "hector siembra y cosecha un maiz"{
-	
-	setup
-
-		cosnt maiz = new maiz();
-		hector.position(game.at(5,5))
-		//
-		hector.sembrar(maiz)
-		assert.notThat(maiz.esCosechable())
-		hector.regar()
-		assert.that(maiz.esCosechable())// mala practica envidia de atributos, buscar
-		hector.cosechar()
-		//si esta vacia
-		assert.that(hector.cosecha.conyains(maiz))
-	
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
 
 
 
