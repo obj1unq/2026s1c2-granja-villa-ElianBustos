@@ -56,6 +56,12 @@ object personaje {
 
 //----------------------------------------------------
 
+	method cosechar() {
+		if(self.hayPlanta()) {
+			self.cosechar(self.planta())
+		}
+	}
+
 	method cosechar(planta) {
 		self.validarSiHayPlanta(planta)
 		self.cosecharPlanta(planta)
@@ -74,7 +80,11 @@ object personaje {
 	}
 //----------------------------------------------
 
-
+	method regar() {
+		if(self.hayPlanta()) {
+			self.regar(self.planta())
+		}
+	}
 	method regar(planta) {
 		self.validarSiHayPlanta(planta)
 		self.regarPlanta(planta)
@@ -92,6 +102,12 @@ object personaje {
 	}
 
 //---------------------------------------------------------
+
+	method vender() {
+		if(self.hayMercado()) {
+			self.vender(self.mercado())
+		}
+	}
 
 	method vender(mercado) {
 		if(!self.hayPlantas()){

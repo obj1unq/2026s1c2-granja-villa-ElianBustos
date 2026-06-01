@@ -28,33 +28,17 @@ program farmville {
 	keyboard.t().onPressDo({personaje.sembrar(new Trigo())})
 	keyboard.o().onPressDo({personaje.sembrar(new Tomate())})
 	//regar
-	keyboard.r().onPressDo({
-		if(personaje.hayPlanta()) {
-			personaje.regar(personaje.planta())
-		}
-		})
-
+	keyboard.r().onPressDo({personaje.regar()})
 	//cosechar
+	keyboard.c().onPressDo({personaje.cosechar()})
 
-	keyboard.c().onPressDo({
-		
-		if(personaje.hayPlanta()) {
-			personaje.cosechar(personaje.planta())
-		}
-	})
-
-	//venta
-	keyboard.v().onPressDo({
-		if(personaje.hayMercado()) {
-			personaje.vender(personaje.mercado())
-		}
-		})
-		keyboard.space().onPressDo({personaje.info()})
-
+	//venta y mercado
+	keyboard.v().onPressDo({personaje.vender()})
+	keyboard.space().onPressDo({personaje.info()})
 	//aspersores
 	keyboard.a().onPressDo({personaje.colocarAspersor(new Aspersor())})
 
-	// mercader
+	
 
  	//  COMIENZA
 	game.start()

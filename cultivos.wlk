@@ -113,10 +113,8 @@ class Tomate {
 	}
 
 	method regar() {
-		estado = adulto
+		estado = estado.crecer()
 		self.crecerTomate()
-
-
 	}
 
 	

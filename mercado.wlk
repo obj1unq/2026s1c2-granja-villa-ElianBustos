@@ -25,9 +25,9 @@ class Mercado {
 
     method vender(_mercancia,vendedor) {
         if(self.suficienteDinero(_mercancia)){
-            vendedor.reciveMonedas( self.totalDeDinero(_mercancia))
-            self.descontarMonedas(_mercancia)
             mercancia.addAll(_mercancia)
+            vendedor.reciveMonedas( self.totalDeDinero(mercancia))
+            self.descontarMonedas(_mercancia)
             vendedor.vaciarCosecha()
 
             }

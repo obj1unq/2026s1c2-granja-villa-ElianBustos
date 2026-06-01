@@ -163,9 +163,9 @@ describe "aspersores y regar" {
 
         
         aspersor.position(game.at(5,5))
-        aspersor.regarEnPosicion(game.at(5,6))
-        aspersor.regarEnPosicion(game.at(5,4))
-        aspersor.regarEnPosicion(game.at(6,5))
+        aspersor.regarEnPosicionSiPuede(game.at(5,6))
+        aspersor.regarEnPosicionSiPuede(game.at(5,4))
+        aspersor.regarEnPosicionSiPuede(game.at(6,5))
 
         
         assert.that(maiz.esCosechable())

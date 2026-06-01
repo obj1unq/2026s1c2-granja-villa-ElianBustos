@@ -16,6 +16,10 @@ object  bebe{
 		return "corn_baby.png"
 	}
 
+	method crecer() {
+		return adulto
+	}
+
     
 }
 
@@ -34,6 +38,10 @@ object adulto {
 
 	method maiz() {
 		return "corn_adult.png"
+	}
+
+	method crecer() {
+	
 	}
 }
 

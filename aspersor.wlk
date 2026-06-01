@@ -30,7 +30,7 @@ class Aspersor {
                                 position.down(1).right(1),
                                 position.left(1).down(1),
                                 position.right(1).up(1)]
-            posiciones.forEach({ posicion =>self.regarEnPosicion(posicion)})
+            posiciones.forEach({ posicion =>self.regarEnPosicionSiPuede(posicion)})
 
         })
     }
@@ -38,15 +38,15 @@ class Aspersor {
 
     
 
-    method regarEnPosicion(posicion) {
-        if(self.posicionValida(posicion)){
-            self.regarPlanta(posicion)
+    method regarEnPosicionSiPuede(posicion) {
+        if(self.esPosicionValida(posicion)){
+            self.regarPlantaEnLaPosicion(posicion)
         }
     }
 
-    	method regarPlanta(posicion) {
-            if(self.hayPlanta(posicion)) {
-                self.planta(posicion).regar()
+    	method regarPlantaEnLaPosicion(posicion) {
+            if(self.hayPlantaAqui(posicion)) {
+                self.plantaEnPosicion(posicion).regar()
             }
 
             
@@ -55,7 +55,7 @@ class Aspersor {
 
 
 
-    	method posicionValida(posicion) {
+    	method esPosicionValida(posicion) {
 		  return posicion.x() >= 0 && posicion.y() >= 0 &&  posicion.x() < game.width() && posicion.y() < game.height()
         }
 
@@ -76,11 +76,11 @@ class Aspersor {
 		return self.objetosEnPosicion(posicion).filter({ obj => obj.esPlanta() })
 	}
 
-	method hayPlanta(posicion) {
+	method hayPlantaAqui(posicion) {
 		return !self.plantaEnPosicionAspersor(posicion).isEmpty()
 	}
 
-	method planta(posicion) {
+	method plantaEnPosicion(posicion) {
 		return self.plantaEnPosicionAspersor(posicion).first()
 	}
 
